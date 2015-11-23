@@ -1,26 +1,27 @@
 package com.anthole.quickdev;
 
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import butterknife.ButterKnife;
-
 import com.anthole.quickdev.commonUtils.KeyBoardUtils;
 import com.anthole.quickdev.http.RequestHandle;
 import com.anthole.quickdev.http.base.AsyncHttpClientUtil;
 import com.anthole.quickdev.ui.IProgressDialog;
 import com.anthole.quickdev.ui.IProgressDialog.RequestBean;
 
-public abstract class QActivity extends Activity {
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import butterknife.ButterKnife;
+
+public abstract class QFragmentActivity extends FragmentActivity {
 	
 	protected IProgressDialog iProgressDialog;
 	
 	protected abstract void initData(Bundle savedInstanceState);
 	protected abstract int getLayoutId();
+	protected abstract IProgressDialog createIProgressDialog();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +53,14 @@ public abstract class QActivity extends Activity {
 	}
 	
 	protected void addFragment(Fragment fragment, int containerID){
-		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.setCustomAnimations(0, 0);
 		transaction.add(containerID, fragment);
 		transaction.commitAllowingStateLoss();
 	}
 	
 	protected void hideFragment(Fragment fragment){
-		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.setCustomAnimations(0, 0);
 		transaction.hide(fragment);
 		transaction.commitAllowingStateLoss();
@@ -67,29 +68,29 @@ public abstract class QActivity extends Activity {
 	}
 	
 	protected void showFragment(Fragment fragment){
-		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.setCustomAnimations(0, 0);
 		transaction.show(fragment);
 		transaction.commitAllowingStateLoss();
 	}
 	
 	protected void removeFragment(Fragment fragment){
-		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.setCustomAnimations(0, 0);
 		transaction.remove(fragment);
 		transaction.commitAllowingStateLoss();
 	}
 
-	public void replaceFragment(Fragment fragment, int containerID) {
+	protected void replaceFragment(Fragment fragment, int containerID) {
 
-		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.setCustomAnimations(0, 0);
 		transaction.replace(containerID, fragment);
 		transaction.commitAllowingStateLoss();
 	}
 
-	public void replaceFragment(Fragment fragment, int containerID, int animIn, int animOut) {
-		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+	protected void replaceFragment(Fragment fragment, int containerID, int animIn, int animOut) {
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		if (animIn > 0 || animOut > 0) {
 			transaction.setCustomAnimations(animIn, animOut);
 		}
@@ -97,18 +98,15 @@ public abstract class QActivity extends Activity {
 		transaction.commitAllowingStateLoss();
 	}
 	
-	
-	public abstract IProgressDialog createIProgressDialog();
-	
-	public void showLoadingDialog(RequestHandle requestHandle) {
+	protected void showLoadingDialog(RequestHandle requestHandle) {
 		showLoadingDialog("", requestHandle,0);
 	}
 	
-	public void showLoadingDialog(RequestHandle requestHandle, long delayMillis) {
+	protected void showLoadingDialog(RequestHandle requestHandle, long delayMillis) {
 		showLoadingDialog("", requestHandle,delayMillis);
 	}
 
-	public void showLoadingDialog(String content, RequestHandle requestHandle, long delayMillis) {
+	protected void showLoadingDialog(String content, RequestHandle requestHandle, long delayMillis) {
 		if (iProgressDialog == null) {
 			iProgressDialog = createIProgressDialog();
 		} 
@@ -120,7 +118,7 @@ public abstract class QActivity extends Activity {
 		
 	}
 
-	public void dismissLoadingDialog() {
+	protected void dismissLoadingDialog() {
 		handlerProgress.removeMessages(1);
 		if(iProgressDialog!=null){
 			iProgressDialog.dismissDialog();
