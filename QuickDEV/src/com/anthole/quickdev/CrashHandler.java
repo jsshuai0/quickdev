@@ -140,15 +140,14 @@ public class CrashHandler implements UncaughtExceptionHandler {
 						onCrashListener.onCrash();
 					}else{
 						T.showLong(mContext, showMessage);
-						AppManager.getAppManager().AppExit(mContext);
+						QAppManager.getAppManager().AppExit(mContext,false);
 						PackageManager tmxx = mContext.getPackageManager();
 						Intent intent = tmxx.getLaunchIntentForPackage(mContext
 								.getPackageName());
 						intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 						mContext.startActivity(intent);
-						Looper.loop();
 					}
-					
+					Looper.loop();
 
 				}
 			}.start();
