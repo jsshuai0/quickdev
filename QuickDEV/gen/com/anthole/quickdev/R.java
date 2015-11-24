@@ -8,6 +8,10 @@
 package com.anthole.quickdev;
 
 public final class R {
+    public static final class anim {
+        public static int slide_in_top=0x7f040000;
+        public static int slide_out_top=0x7f040001;
+    }
     public static final class attr {
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
@@ -144,46 +148,55 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static int shadow_right=0x7f010003;
     }
     public static final class color {
-        public static int red=0x7f040000;
+        public static int red=0x7f050000;
     }
     public static final class drawable {
-        public static int ptr_rotate_arrow=0x7f020000;
-        public static int shadow_bottom=0x7f020001;
-        public static int shadow_left=0x7f020002;
-        public static int shadow_right=0x7f020003;
+        public static int ic_load_error=0x7f020000;
+        public static int ptr_rotate_arrow=0x7f020001;
+        public static int shadow_bottom=0x7f020002;
+        public static int shadow_left=0x7f020003;
+        public static int shadow_right=0x7f020004;
     }
     public static final class id {
-        public static int all=0x7f070000;
-        public static int bottom=0x7f070001;
-        public static int content=0x7f070004;
-        public static int empty=0x7f070005;
-        public static int error=0x7f070006;
-        public static int left=0x7f070002;
-        public static int loading=0x7f070007;
-        public static int ptr_classic_header_rotate_view=0x7f07000b;
-        public static int ptr_classic_header_rotate_view_header_last_update=0x7f07000a;
-        public static int ptr_classic_header_rotate_view_header_text=0x7f070008;
-        public static int ptr_classic_header_rotate_view_header_title=0x7f070009;
-        public static int ptr_classic_header_rotate_view_progressbar=0x7f07000c;
-        public static int right=0x7f070003;
-        public static int swipe=0x7f07000d;
+        public static int all=0x7f070001;
+        public static int bottom=0x7f070002;
+        public static int content=0x7f070005;
+        public static int empty=0x7f070006;
+        public static int error=0x7f070007;
+        public static int left=0x7f070003;
+        public static int ll_loading_gridview=0x7f07000e;
+        public static int loading=0x7f070008;
+        public static int multi_state_view=0x7f070000;
+        public static int progress_wheel=0x7f07000f;
+        public static int ptr_classic_header_rotate_view=0x7f07000c;
+        public static int ptr_classic_header_rotate_view_header_last_update=0x7f07000b;
+        public static int ptr_classic_header_rotate_view_header_text=0x7f070009;
+        public static int ptr_classic_header_rotate_view_header_title=0x7f07000a;
+        public static int ptr_classic_header_rotate_view_progressbar=0x7f07000d;
+        public static int right=0x7f070004;
+        public static int swipe=0x7f070010;
     }
     public static final class layout {
         public static int cube_ptr_classic_default_header=0x7f030000;
         public static int cube_ptr_simple_loading=0x7f030001;
-        public static int swipeback_layout=0x7f030002;
+        public static int multi_state_view=0x7f030002;
+        public static int pull_layout_load_fail=0x7f030003;
+        public static int pull_layout_loading=0x7f030004;
+        public static int pull_layout_no_data=0x7f030005;
+        public static int qprogress_dialog=0x7f030006;
+        public static int swipeback_layout=0x7f030007;
     }
     public static final class string {
-        public static int app_name=0x7f050009;
-        public static int cube_ptr_hours_ago=0x7f050008;
-        public static int cube_ptr_last_update=0x7f050005;
-        public static int cube_ptr_minutes_ago=0x7f050007;
-        public static int cube_ptr_pull_down=0x7f050000;
-        public static int cube_ptr_pull_down_to_refresh=0x7f050001;
-        public static int cube_ptr_refresh_complete=0x7f050004;
-        public static int cube_ptr_refreshing=0x7f050003;
-        public static int cube_ptr_release_to_refresh=0x7f050002;
-        public static int cube_ptr_seconds_ago=0x7f050006;
+        public static int app_name=0x7f060009;
+        public static int cube_ptr_hours_ago=0x7f060008;
+        public static int cube_ptr_last_update=0x7f060005;
+        public static int cube_ptr_minutes_ago=0x7f060007;
+        public static int cube_ptr_pull_down=0x7f060000;
+        public static int cube_ptr_pull_down_to_refresh=0x7f060001;
+        public static int cube_ptr_refresh_complete=0x7f060004;
+        public static int cube_ptr_refreshing=0x7f060003;
+        public static int cube_ptr_release_to_refresh=0x7f060002;
+        public static int cube_ptr_seconds_ago=0x7f060006;
     }
     public static final class style {
         /** 
@@ -200,12 +213,15 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         res/values-v11/styles.xml on API 14+ devices.
     
          */
-        public static int AppBaseTheme=0x7f060000;
+        public static int AppBaseTheme=0x7f080000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static int AppTheme=0x7f060001;
-        public static int SwipeBackLayout=0x7f060002;
+        public static int AppTheme=0x7f080001;
+        public static int CustomDialog=0x7f080003;
+        public static int LoadingDialog=0x7f080004;
+        public static int SwipeBackLayout=0x7f080002;
+        public static int dialogWindowAnim=0x7f080005;
     }
     public static final class styleable {
         /** Attributes that can be used with a MultiStateView.
