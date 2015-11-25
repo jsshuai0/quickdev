@@ -4,7 +4,8 @@ import com.anthole.quickdev.http.RequestHandle;
 import com.anthole.quickdev.ui.IProgressDialog;
 import com.anthole.quickdev.ui.IProgressDialog.RequestBean;
 
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,7 +17,7 @@ import butterknife.ButterKnife;
 
 public abstract class QFragment extends Fragment{
 	
-	protected Context mContext;
+	protected Activity mContext;
 	protected View rootView;
 	protected IProgressDialog iProgressDialog;
 	
@@ -30,9 +31,14 @@ public abstract class QFragment extends Fragment{
 	}
 	
 	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		mContext = activity;
+	}
+	
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mContext = getActivity();
 	}
 	
 	@Override
@@ -102,5 +108,16 @@ public abstract class QFragment extends Fragment{
 			iProgressDialog.showDialog();
 		}
 	};
+	
+	public void jump2Activity(Class<?> target){
+		Intent intent = new Intent(mContext,target);
+		startActivity(intent);
+	}
+	
+	public void jump2Activity(Class<?> target,Bundle extras){
+		Intent intent = new Intent(mContext,target);
+		intent.putExtras(extras);
+		startActivity(intent);
+	}
 
 }

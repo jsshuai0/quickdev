@@ -7,6 +7,7 @@ import com.anthole.quickdev.http.base.AsyncHttpClientUtil;
 import com.anthole.quickdev.ui.IProgressDialog;
 import com.anthole.quickdev.ui.IProgressDialog.RequestBean;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -132,5 +133,16 @@ public abstract class QFragmentActivity extends FragmentActivity {
 			iProgressDialog.showDialog();
 		}
 	};
+	
+	public void jump2Activity(Class<?> target){
+		Intent intent = new Intent(this,target);
+		startActivity(intent);
+	}
+	
+	public void jump2Activity(Class<?> target,Bundle extras){
+		Intent intent = new Intent(this,target);
+		intent.putExtras(extras);
+		startActivity(intent);
+	}
 
 }

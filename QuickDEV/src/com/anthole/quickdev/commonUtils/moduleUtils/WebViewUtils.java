@@ -6,6 +6,9 @@ import android.webkit.CookieSyncManager;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import cz.msebera.android.httpclient.cookie.Cookie;
+
+import java.util.List;
 
 import com.anthole.quickdev.commonUtils.logUtils.Logs;
 
@@ -48,6 +51,18 @@ public class WebViewUtils {
 
     }
 
+    /**
+     *     DefaultHttpClient httpclient=....;  
+
+        for (Cookie cookie : cookies){  
+            String cookieString = cookie.getName() + "=" + cookie.getValue() + "; domain=" + cookie.getDomain();  
+            cookieManager.setCookie(toUrl, cookieString);  
+            CookieSyncManager.getInstance().sync();  
+        }  
+     * @param context
+     * @param domainNameUrl
+     * @param strings
+     */
     public static void syncCookie(Context context, String domainNameUrl, String... strings) {
         CookieSyncManager.createInstance(context);
         //CookieSyncManager.getInstance().startSync();
@@ -58,6 +73,21 @@ public class WebViewUtils {
             cookieManager.setCookie(domainNameUrl, s);
 
         }
+        Logs.d(cookieManager.getCookie(domainNameUrl));
+        CookieSyncManager.getInstance().sync();
+        //    CookieSyncManager.getInstance().stopSync();
+    }
+    
+    public static void syncCookie(Context context, String domainNameUrl, List<Cookie> cookies) {
+        CookieSyncManager.createInstance(context);
+        //CookieSyncManager.getInstance().startSync();
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        cookieManager.removeAllCookie();
+        for (Cookie cookie : cookies){  
+            String cookieString = cookie.getName() + "=" + cookie.getValue() + "; domain=" + cookie.getDomain();  
+            cookieManager.setCookie(domainNameUrl, cookieString);  
+        } 
         Logs.d(cookieManager.getCookie(domainNameUrl));
         CookieSyncManager.getInstance().sync();
         //    CookieSyncManager.getInstance().stopSync();

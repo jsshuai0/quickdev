@@ -4,6 +4,7 @@ package com.anthole.quickdev;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -36,6 +37,17 @@ public abstract class QActivity extends Activity {
 		ButterKnife.bind(this);
 	}
 	
+	public void jump2Activity(Class<?> target){
+		Intent intent = new Intent(this,target);
+		startActivity(intent);
+	}
+	
+	public void jump2Activity(Class<?> target,Bundle extras){
+		Intent intent = new Intent(this,target);
+		intent.putExtras(extras);
+		startActivity(intent);
+	}
+	
 	@Override
 	public void finish() {
 		//关闭软键盘
@@ -50,53 +62,6 @@ public abstract class QActivity extends Activity {
 		super.onDestroy();
 		QAppManager.getAppManager().finishActivity(this);
 	}
-	
-	protected void addFragment(Fragment fragment, int containerID){
-		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		transaction.setCustomAnimations(0, 0);
-		transaction.add(containerID, fragment);
-		transaction.commitAllowingStateLoss();
-	}
-	
-	protected void hideFragment(Fragment fragment){
-		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		transaction.setCustomAnimations(0, 0);
-		transaction.hide(fragment);
-		transaction.commitAllowingStateLoss();
-		
-	}
-	
-	protected void showFragment(Fragment fragment){
-		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		transaction.setCustomAnimations(0, 0);
-		transaction.show(fragment);
-		transaction.commitAllowingStateLoss();
-	}
-	
-	protected void removeFragment(Fragment fragment){
-		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		transaction.setCustomAnimations(0, 0);
-		transaction.remove(fragment);
-		transaction.commitAllowingStateLoss();
-	}
-
-	public void replaceFragment(Fragment fragment, int containerID) {
-
-		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		transaction.setCustomAnimations(0, 0);
-		transaction.replace(containerID, fragment);
-		transaction.commitAllowingStateLoss();
-	}
-
-	public void replaceFragment(Fragment fragment, int containerID, int animIn, int animOut) {
-		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		if (animIn > 0 || animOut > 0) {
-			transaction.setCustomAnimations(animIn, animOut);
-		}
-		transaction.replace(containerID, fragment);
-		transaction.commitAllowingStateLoss();
-	}
-	
 	
 	public abstract IProgressDialog createIProgressDialog();
 	
