@@ -5,7 +5,10 @@ import com.anthole.quickdev.ui.IProgressDialog;
 import com.anthole.quickdev.ui.IProgressDialog.RequestBean;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -119,5 +122,47 @@ public abstract class QFragment extends Fragment{
 		intent.putExtras(extras);
 		startActivity(intent);
 	}
+	
+	
+	IntentFilter filter;
+	
+	BroadcastReceiver receiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			QFragment.this.onReceive(context, intent);
+		}
+	};
+	
+	public String[] filterActions() {
+		return null;
+	}
+	
+	public void onReceive(Context context, Intent intent) {
+		
+	};
+
+	public void register() {
+		if (mContext != null) {
+			String[] actions = filterActions();
+			if (actions == null || actions.length == 0) {
+				return;
+			}
+			filter = new IntentFilter();
+			filter.addCategory(mContext.getPackageName());
+			for (String action : actions) {
+				filter.addAction(action);
+			}
+			mContext.registerReceiver(receiver, filter);
+		}
+	}
+
+	public void unRegister() {
+		if (mContext != null && filter != null) {
+			mContext.unregisterReceiver(receiver);
+			filter = null;
+		}
+	}
+	
 
 }

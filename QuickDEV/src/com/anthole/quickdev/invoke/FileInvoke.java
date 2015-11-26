@@ -39,5 +39,10 @@ public class FileInvoke{
 		return file;
 	}
 	
+	public File getAppCacheDir(){
+		File file = StorageUtils.getCacheDirectory(mContext);
+		return file;
+	}
+	
 
 }

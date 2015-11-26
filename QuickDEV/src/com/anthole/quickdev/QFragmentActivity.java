@@ -7,7 +7,10 @@ import com.anthole.quickdev.http.base.AsyncHttpClientUtil;
 import com.anthole.quickdev.ui.IProgressDialog;
 import com.anthole.quickdev.ui.IProgressDialog.RequestBean;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -30,6 +33,7 @@ public abstract class QFragmentActivity extends FragmentActivity {
 		QAppManager.getAppManager().addActivity(this);
 		setContentView(getLayoutId());
 		initData(savedInstanceState);
+		register();
 	}
 	
 	@Override
@@ -48,6 +52,7 @@ public abstract class QFragmentActivity extends FragmentActivity {
 	
 	@Override
 	protected void onDestroy() {
+		unRegister();
 		AsyncHttpClientUtil.getInstance(this).cancelRequests(this, true);
 		super.onDestroy();
 		QAppManager.getAppManager().finishActivity(this);
@@ -144,5 +149,43 @@ public abstract class QFragmentActivity extends FragmentActivity {
 		intent.putExtras(extras);
 		startActivity(intent);
 	}
+	
+	IntentFilter filter;
+
+	public void register() {
+		String[] actions = filterActions();
+		if (actions == null || actions.length == 0) {
+			return;
+		}
+		filter = new IntentFilter();
+		for (String action : actions) {
+			filter.addAction(action);
+		}
+		filter.addCategory(getPackageName());
+		registerReceiver(receiver, filter);
+	}
+	
+	public void unRegister() {
+		if (filter != null) {
+			unregisterReceiver(receiver);
+			filter = null;
+		}
+	}
+	
+	public String[] filterActions() {
+		return null;
+	}
+	
+	public void onReceive(Context context, Intent intent) {
+		
+	};
+	
+	BroadcastReceiver receiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			QFragmentActivity.this.onReceive(context, intent);
+		}
+	};
 
 }

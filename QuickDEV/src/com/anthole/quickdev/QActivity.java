@@ -1,20 +1,21 @@
 package com.anthole.quickdev;
 
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import butterknife.ButterKnife;
-
 import com.anthole.quickdev.commonUtils.KeyBoardUtils;
 import com.anthole.quickdev.http.RequestHandle;
 import com.anthole.quickdev.http.base.AsyncHttpClientUtil;
 import com.anthole.quickdev.ui.IProgressDialog;
 import com.anthole.quickdev.ui.IProgressDialog.RequestBean;
+
+import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import butterknife.ButterKnife;
 
 public abstract class QActivity extends Activity {
 	
@@ -29,6 +30,7 @@ public abstract class QActivity extends Activity {
 		QAppManager.getAppManager().addActivity(this);
 		setContentView(getLayoutId());
 		initData(savedInstanceState);
+		register();
 	}
 	
 	@Override
@@ -58,6 +60,7 @@ public abstract class QActivity extends Activity {
 	
 	@Override
 	protected void onDestroy() {
+		unRegister();
 		AsyncHttpClientUtil.getInstance(this).cancelRequests(this, true);
 		super.onDestroy();
 		QAppManager.getAppManager().finishActivity(this);
@@ -97,6 +100,44 @@ public abstract class QActivity extends Activity {
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			iProgressDialog.showDialog();
+		}
+	};
+	
+	IntentFilter filter;
+
+	public void register() {
+		String[] actions = filterActions();
+		if (actions == null || actions.length == 0) {
+			return;
+		}
+		filter = new IntentFilter();
+		for (String action : actions) {
+			filter.addAction(action);
+		}
+		filter.addCategory(getPackageName());
+		registerReceiver(receiver, filter);
+	}
+	
+	public void unRegister() {
+		if (filter != null) {
+			unregisterReceiver(receiver);
+			filter = null;
+		}
+	}
+	
+	public String[] filterActions() {
+		return null;
+	}
+	
+	public void onReceive(Context context, Intent intent) {
+		
+	};
+	
+	BroadcastReceiver receiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			QActivity.this.onReceive(context, intent);
 		}
 	};
 
