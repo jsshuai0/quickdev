@@ -104,15 +104,15 @@ public abstract class QFragmentActivity extends FragmentActivity {
 		transaction.commitAllowingStateLoss();
 	}
 	
-	protected void showLoadingDialog(RequestHandle requestHandle) {
+	public void showLoadingDialog(RequestHandle requestHandle) {
 		showLoadingDialog("", requestHandle,0);
 	}
 	
-	protected void showLoadingDialog(RequestHandle requestHandle, long delayMillis) {
+	public void showLoadingDialog(RequestHandle requestHandle, long delayMillis) {
 		showLoadingDialog("", requestHandle,delayMillis);
 	}
 
-	protected void showLoadingDialog(String content, RequestHandle requestHandle, long delayMillis) {
+	public void showLoadingDialog(String content, RequestHandle requestHandle, long delayMillis) {
 		if (iProgressDialog == null) {
 			iProgressDialog = createIProgressDialog();
 		} 
@@ -124,7 +124,7 @@ public abstract class QFragmentActivity extends FragmentActivity {
 		
 	}
 
-	protected void dismissLoadingDialog() {
+	public void dismissLoadingDialog() {
 		handlerProgress.removeMessages(1);
 		if(iProgressDialog!=null){
 			iProgressDialog.dismissDialog();

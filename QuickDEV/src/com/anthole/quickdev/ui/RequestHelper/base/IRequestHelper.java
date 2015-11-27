@@ -1,10 +1,12 @@
 package com.anthole.quickdev.ui.RequestHelper.base;
 
-import com.anthole.quickdev.http.TextHttpResponseHandler;
+import com.anthole.quickdev.http.ResponseHandlerInterface;
 
-public interface IRequestHelper {
+public interface IRequestHelper<H extends ResponseHandlerInterface> {
 	
-	public TextHttpResponseHandler getResponseHandler();
+	public H getResponseHandler();
+	
+	public void setViewState(int state);
 	
 	public void refresh();
 	

@@ -20,7 +20,7 @@ public class AsyncHttpClientUtil {
     public static AsyncHttpClient getInstance(Context paramContext) {  
         if (client == null) {  
             client = new AsyncHttpClient();  
-            client.setTimeout(300*1000);
+            client.setTimeout(30*1000);
             client.setConnectTimeout(30*1000);
             mCookieStore = new PersistentCookieStore(paramContext); 
             client.setCookieStore(mCookieStore);  

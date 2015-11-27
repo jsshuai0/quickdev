@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import static com.anthole.quickdev.adapter.BaseAdapterHelper.get;
 
 /**
@@ -36,6 +37,8 @@ public abstract class QuickAdapter<T> extends
 		BaseQuickAdapter<T, BaseAdapterHelper>
 {
 
+	private OnDataChangeListener mOnDataChangeListener;
+	
 	/**
 	 * Create a QuickAdapter.
 	 * 
@@ -88,5 +91,22 @@ public abstract class QuickAdapter<T> extends
 			return get(context, convertView, parent, layoutResId, position);
 		}
 	}
+	
+	@Override
+    public void notifyDataSetChanged() {
+    	// TODO Auto-generated method stub
+    	super.notifyDataSetChanged();
+    	if(mOnDataChangeListener!=null){
+    		mOnDataChangeListener.onDataChanged();
+    	}
+    }
+    
+    public void setOnDataChangeListener(OnDataChangeListener onDataChangeListener){
+    	this.mOnDataChangeListener = onDataChangeListener;
+    }
+    
+    public interface OnDataChangeListener{
+    	public void onDataChanged();
+    }
 
 }

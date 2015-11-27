@@ -1,5 +1,7 @@
 package com.anthole.quickdev.ui.RequestHelper.base;
 
+import java.util.List;
+
 /**
  * 数据解析
  * @author 123
@@ -8,6 +10,6 @@ package com.anthole.quickdev.ui.RequestHelper.base;
  */
 public interface IParser<T> {
 	
-	public T parse(String data);
+	public List<T> parseList(String data);
 
 }

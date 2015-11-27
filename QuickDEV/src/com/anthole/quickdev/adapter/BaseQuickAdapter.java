@@ -233,7 +233,7 @@ public abstract class BaseQuickAdapter<T, H extends BaseAdapterHelper> extends
 		displayIndeterminateProgress = display;
 		notifyDataSetChanged();
 	}
-
+	
 	/**
 	 * Implement this method and use the helper to adapt the view to the given
 	 * item.
@@ -267,5 +267,9 @@ public abstract class BaseQuickAdapter<T, H extends BaseAdapterHelper> extends
 	 */
 	protected abstract H getAdapterHelper(int position, View convertView,
 			ViewGroup parent);
+	
+	public List<T> getData(){
+    	return data;
+    }
 
 }

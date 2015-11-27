@@ -1,32 +1,32 @@
 package com.anthole.quickdev.ui.RequestHelper;
 
 
-import com.anthole.quickdev.http.TextHttpResponseHandler;
+import com.anthole.quickdev.http.ResponseHandlerInterface;
 import com.anthole.quickdev.ui.MultiStateView;
 import com.anthole.quickdev.ui.RequestHelper.base.IDataSource;
-import com.anthole.quickdev.ui.RequestHelper.base.IDisplayer;
+import com.anthole.quickdev.ui.RequestHelper.base.IParser;
 import com.anthole.quickdev.ui.RequestHelper.base.IRequestHelper;
 
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public abstract class RequestHelper <T,V extends View> implements IRequestHelper{
+public abstract class RequestHelper <T,V extends View,H extends ResponseHandlerInterface> implements IRequestHelper<H>{
 	
-	protected TextHttpResponseHandler responseHandler;
+	protected H responseHandler;
 	
 	protected Context context;
-	protected IDataSource dataSource;
-	protected IDisplayer<T> displayer;
+	protected IDataSource<H> dataSource;
+	protected IParser<T> parser;
 	protected MultiStateView multiStateView;
 	protected V contentView;
 	
-	public void setDataSource(IDataSource dataSource){
+	public void setDataSource(IDataSource<H> dataSource){
 		this.dataSource = dataSource;
 	}
 	
-	public void setDisplayer(IDisplayer<T> displayer){
-		this.displayer = displayer;
+	public void setDisplayer(IParser<T> parser){
+		this.parser = parser;
 	}
 	
 	public void setContentView(V contentView){
@@ -43,6 +43,13 @@ public abstract class RequestHelper <T,V extends View> implements IRequestHelper
 				refresh();
 			}
 		});
+	}
+	
+	@Override
+	public void setViewState(int state){
+		if(this.multiStateView!=null){
+			multiStateView.setViewState(state);
+		}
 	}
 	
 	public RequestHelper (Context context) {
