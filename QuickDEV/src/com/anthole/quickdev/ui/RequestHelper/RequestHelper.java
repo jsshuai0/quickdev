@@ -25,7 +25,7 @@ public abstract class RequestHelper <T,V extends View,H extends ResponseHandlerI
 		this.dataSource = dataSource;
 	}
 	
-	public void setDisplayer(IParser<T> parser){
+	public void setParser(IParser<T> parser){
 		this.parser = parser;
 	}
 	
